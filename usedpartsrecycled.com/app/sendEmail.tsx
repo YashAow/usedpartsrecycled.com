@@ -1,16 +1,17 @@
 import nodemailer from "nodemailer";
 // import 'setimmediate';
-
+ 
 const transporter = nodemailer.createTransport({
   port: 587,
   host: "smtp.gmail.com",
   secure: false,
   auth: {
-    user: "leads@autosquare.us",
-    pass: "qdsw xraw jwfj klmn",
+    user: "leadspartscentral.us@gmail.com",
+    pass: "ftzc nrta ufnx sudz",
+   
   },
 });
-
+ 
 export function sendEmail(
   year: string,
   engine_size: string,
@@ -28,7 +29,7 @@ export function sendEmail(
   SearchBy: string
 ) {
   // console.log("Hello", year, engine_size, make, model, transmission, part, name, email, phone, zip_code);
-
+ 
   const htmlBody =
     "<table width='100%' border='0' cellspacing='3' cellpadding='3' bgcolor='#F9F9F9'><tbody><tr><td colspan='4' align='center' bgcolor='#CCCCCC'><strong>You Have Received Enquiry. Following are the details</strong></td></tr>" +
     "<tr><td> Name: </td><td>" +
@@ -64,7 +65,7 @@ export function sendEmail(
     transmission +
     "</td></tr>" +
     "</tbody></table>";
-
+ 
   const newhtmlBody =
     "<table width='100%' border='0' cellspacing='3' cellpadding='3' bgcolor='#F9F9F9'><tbody><tr><td colspan='4' align='center' bgcolor='#CCCCCC'><strong>You Have Received Enquiry. Following are the details</strong></td></tr>" +
     "<tr><td> Name: </td><td>" +
@@ -112,39 +113,53 @@ export function sendEmail(
     SearchBy +
     "</td></tr>" +
     "</tbody></table>";
-
+ 
   const mailData = {
-    from: "UsedAutoLeads <partscentralus@gmail.com>",
-    to: "sales@partscentral.us",
+    from: "UsedCarPartsCentral <leadspartscentral.us@gmail.com>",
+    // to: "sales@partscentral.us",
+    to: "a2zautoleads@gmail.com",
+   
+   
     replyTo: email,
-    subject: "UAP - " + year + " - " + make + " - " + part + "- " + zip_code,
+    subject: "UCPC - " + year + " - " + make + " - " + part + "- " + zip_code,
     html: htmlBody,
+    headers: {
+      'X-Priority': '1',
+      'X-MSMail-Priority': 'High',
+      'Importance': 'high'
+    }
   };
-
+ 
   const newMailData = {
-    from: "UsedAutoLeads <partscentralus@gmail.com>",
-    to: "sales@partscentral.us",
+    from: "UsedCarPartsCentral <leadspartscentral.us@gmail.com>",
+    // to: "sales@partscentral.us",
+ 
+   to: "a2zautoleads@gmail.com",
+ 
+   
     replyTo: email,
-    subject: "UAP - " + year + " - " + make + " - " + part + "- " + zip_code,
+    subject: "UCPC - " + year + " - " + make + " - " + part + "- " + zip_code,
     html: newhtmlBody,
+    headers: {
+      'X-Priority': '1',
+      'X-MSMail-Priority': 'High',
+      'Importance': 'high'
+    }
   };
-
+ 
   return new Promise((resolve, reject) => {
-    transporter.sendMail(mailData, (error: any, info: any) => {
+    transporter.sendMail(newMailData, (error, info) => {
       if (error) {
+        console.error("❌ SMTP error code:", (error as any)?.code);
+        console.error("❌ SMTP error response:", (error as any)?.response);
         reject(error);
       } else {
-        // console.log('First email sent successfully:', info.response);
-        // Call second sendMail with different data
-        transporter.sendMail(newMailData, (error2, info2) => {
-          if (error2) {
-            reject(error2);
-          } else {
-            // console.log('Second email sent successfully:', info2.response);
-            resolve(info2.response);
-          }
-        });
+        console.log('Email sent successfully:', info.response);
+        console.log('Email message ID:', info.messageId);
+        console.log('Email to:', newMailData.to);
+        resolve(info.response);
       }
     });
   });
 }
+ 

@@ -3,6 +3,8 @@ import { sendEmail } from "../../sendEmail";
 
 export async function POST(request: Request) {
   const data = await request.json();
+  console.log(data.year);
+  
 
   try {
     await sendEmail(

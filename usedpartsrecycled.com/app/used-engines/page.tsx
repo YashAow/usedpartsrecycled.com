@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SubHeadComponent from "@/components/sub-head-component";
+
 import SearchByMake from "@/components/search-by-make";
 import HeroSection from "@/components/hero-section";
 
@@ -15,24 +15,18 @@ export const metadata = {
 export default function UsedEnginesPage() {
   return (
     <main className="flex min-h-screen flex-col bg-white">
-      {/* <SubHeadComponent
-        title="Used Engines for Sale"
-        subTitle="Unlock Power and Savings with High-Quality Used Engines for Sale"
-        bgImageUrl="/banner-home.png?height=600&width=1600"
-        selectedMake="Choose Your Car"
-        selectedPart="Choose Part"
-      /> */}
+     
 
       <HeroSection
         title="Used Engines for Sale"
         description="Unlock Power and Savings with High-Quality Used Engines for Sale"
-        background="/banner-home.webp?height=600&width=1200"
+        background="/banner-hero.webp?height=600&width=1200"
       />
 
       <div className="mx-auto w-full max-w-screen-xl flex lg:flex-row md:flex-row flex-col mt-10">
         <div className="px-3 mb-10">
           <h2 className="font-sans text-[#002E5B] text-[28px] font-bold">
-            Revive Your Vehicle&apos;s Performance: Find Reliable Used Engines
+            Revive Your Vehiclecs Performance: Find Reliable Used Engines
           </h2>
           <p className="text-gray-700 text-[17px] mt-4">
             At Parts Central, your vehicle&apos;s performance will get reborn
@@ -122,13 +116,7 @@ export default function UsedEnginesPage() {
           </p>
         </div>
 
-        <Image
-          src="/placeholder.svg?height=231&width=203"
-          width={203}
-          height={231}
-          alt="used car engines for sale"
-          className="self-start"
-        />
+     
       </div>
       <div className="mx-auto w-full max-w-screen-xl flex lg:flex-column md:flex-column flex-col">
         <SearchByMake page="engines" />

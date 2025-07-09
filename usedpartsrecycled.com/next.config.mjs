@@ -1,12 +1,17 @@
-let userConfig = undefined;
+// next.config.mjs
+
+let userConfig = {};
+
 try {
-  userConfig = await import("./v0-user-next.config");
+  const imported = await import('./v0-user-next.config.mjs').then((mod) => mod.default || mod);
+  userConfig = imported;
 } catch (e) {
-  // ignore error
+  // No user config found
 }
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const baseConfig = {
+  reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -14,8 +19,9 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    formats: ["image/webp"],
+    formats: ['image/avif', 'image/webp'],
     unoptimized: true,
+    minimumCacheTTL: 31536000,
   },
   experimental: {
     webpackBuildWorker: true,
@@ -24,26 +30,22 @@ const nextConfig = {
   },
 };
 
-mergeConfig(nextConfig, userConfig);
-
-function mergeConfig(nextConfig, userConfig) {
-  if (!userConfig) {
-    return;
-  }
-
-  for (const key in userConfig) {
+function mergeConfig(base, user) {
+  const result = { ...base };
+  for (const key in user) {
     if (
-      typeof nextConfig[key] === "object" &&
-      !Array.isArray(nextConfig[key])
+      typeof base[key] === 'object' &&
+      !Array.isArray(base[key]) &&
+      typeof user[key] === 'object'
     ) {
-      nextConfig[key] = {
-        ...nextConfig[key],
-        ...userConfig[key],
-      };
+      result[key] = { ...base[key], ...user[key] };
     } else {
-      nextConfig[key] = userConfig[key];
+      result[key] = user[key];
     }
   }
+  return result;
 }
 
-export default nextConfig;
+const finalConfig = mergeConfig(baseConfig, userConfig);
+
+export default finalConfig;

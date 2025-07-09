@@ -12,7 +12,6 @@ const navigation = [
   { name: "Used Auto Parts", href: "/used-auto-parts" },
   { name: "Used Transmissions", href: "/used-transmissions" },
   { name: "Used Engines", href: "/used-engines" },
-  // { name: "About Us", href: "/about" },
   { name: "Contact Us", href: "/contact" },
 ];
 
@@ -21,31 +20,29 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#004260] shadow-sm w-full">
+    <header className="sticky top-0 z-50 bg-[#004260] shadow-sm w-full overflow-hidden">
       <div className="container py-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between overflow-hidden">
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
             <Image
               src="/logo---new.webp"
-              alt="parts central Logo"
+              alt="Parts Central Logo"
               width={300}
               height={100}
               style={{
-                height: "300px",
+                height: 'auto',
                 maxHeight: "100px",
-                width: "500px",
+                width: "250",
                 maxWidth: "250px",
               }}
               className="object-cover"
               priority
             />
-       
-
           </Link>
 
-          {/* Desktop Navigation - with whitespace-nowrap to prevent wrapping */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-1 overflow-hidden">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -53,7 +50,7 @@ export default function Header() {
                 className={cn(
                   "px-3 py-2 rounded-md transition-colors whitespace-nowrap text-sm",
                   pathname === item.href
-                    ? "bg-[#668d9f] text-white"
+                    ? "bg-[#668d9f] text-white overflow-hidden"
                     : "hover:text-blue text-white"
                 )}
               >
@@ -62,7 +59,7 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Tablet Navigation - with shortened names */}
+          {/* Tablet Navigation */}
           <nav className="hidden md:flex lg:hidden items-center space-x-1">
             {navigation.map((item) => (
               <Link
@@ -75,7 +72,6 @@ export default function Header() {
                     : "text-gray-700 hover:text-blue"
                 )}
               >
-                {/* Shorten names for tablet view */}
                 {item.name === "Used Auto Parts"
                   ? "Auto Parts"
                   : item.name === "Used Transmissions"
@@ -89,9 +85,9 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle Button */}
           <button
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-red-600"
+            className="md:hidden p-2 rounded-md text-white hover:text-red-500"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -117,7 +113,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu - Slide down panel */}
+      {/* Mobile Navigation Panel */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
           <div className="container py-3 space-y-2">
